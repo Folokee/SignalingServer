@@ -139,6 +139,25 @@ webSocket.on('request',(request)=>{
                         }
                     }))
                 }
+            break;
+
+            case "end_call":
+                /* ===============================
+                message struct:
+                {
+                    type: "end_call",
+                    target: Email of person to call,
+                }
+                ==================================
+                */
+                let userToEndCall = findUser(data.target)
+                if (userToEndCall) {
+                    userToEndCall.connection.send(JSON.stringify({
+                        type : "call_ended",
+                        email: data.email,
+                    }))
+                }
+            break;
             
 
         }
